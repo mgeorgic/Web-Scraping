@@ -88,3 +88,50 @@ def scrape():
     mars_hemi_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(mars_hemi_url)
     time.sleep(1)
+
+    # Find the image url and title and title
+    hemi_html = browser.html
+    soup_h = bs(hemi_html, 'html.parser')
+
+    #Retreive all items
+    items = soup_h.find_all('div', class_='item')
+
+    # Create an empty list 
+    hemi_image_urls = []
+
+    # store the main url
+    hemi_url = 'https://astrogeology.usgs.gov'
+
+    #loop through items 
+    for i in items:
+        #store title
+        title = i.find('h3').text
+    
+        # store the link to full image from thumbnail page
+        image_url = i.find('a', class_='itemLink product-item')['href']
+
+        # link for the full image website
+        browser.visit(hemi_url + image_url)
+    
+        # HTML object for individual hemisphere sites
+        image_url = browser.html    
+    
+        # Parse HTML with Beautiful Soup for each hemisphere
+        image_soup = bs(image_url, 'html.parser')
+    
+        # Full image path
+        hemisphere_img_path = image_soup.find('img', class_='wide-image')['src']
+    
+        # retrieve full image source
+        img_url = f'https://astrogeology.usgs.gov{hemisphere_img_path}'
+    
+        # append title and urls to list
+        hemi_image_urls.append({"title": title,"image_url": img_url})
+        mars_data['hemisphere_images'] = hemi_image_urls
+
+    browser.quit()
+
+    return mars_data
+
+print(scrape())
+print(hemisphere_img_path)
