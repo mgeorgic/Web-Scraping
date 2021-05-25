@@ -35,23 +35,23 @@ def scrape():
     mars_data['news_p'] = news_p
 
     #JPL Mars Space Images
-    mars_image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
+    mars_image_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/index.html'
     browser.visit(mars_image_url)
     
     # JPL Mars Space Images - Featured Image
     #HTML object
-    image_html = Browser.html
+    image_html = browser.html
 
     #Parse HTML with Beautiful Soup
     image_soup = bs(image_html, 'html.parser')
 
     #find first Mars image url
-    img_path = image_soup.find('img', class_='headerimage fade-in')['src']
+    #img_path = image_soup.find('img', class_='fancybox-image')['src']
 
     #combine url to get image path 
-    featured_image_url = f'https://www.jpl.nasa.gov{img_path}'
-    mars_data['featured_image_url'] = featured_image_url
-    print(f'featured_image_url = {featured_img_url}')
+    featured_image_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/image/featured/mars2.jpg'
+    mars_data['featured_img_url'] = featured_image_url
+    print(f'featured image url = {featured_image_url}')
 
     # Visit Mars facts page and use Pandas to scrape the table
     facts_url = 'https://space-facts.com/mars/'
@@ -112,10 +112,10 @@ def scrape():
         title = iv.find('h3').text
     
         # store the link to full image from thumbnail page
-        image_url = iv.find('img', class_='fancybox-image')['src']
+        featured_image_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/image/featured/mars2.jpg'
 
         # link for the full image website
-        browser.visit(hemi_url + image_url)
+        browser.visit(featured_image_url)
     
         # HTML object for individual hemisphere sites
         image_url = browser.html    
@@ -130,7 +130,7 @@ def scrape():
         img_url = f'https://astrogeology.usgs.gov{hemisphere_img_path}'
     
         # append title and urls to list
-        hemi_image_urls.append({"title": title,"image_url": img_url})
+        hemi_image_urls.append({"Title": title,"Image Url": img_url})
         mars_data['hemisphere_images'] = hemi_image_urls
 
     browser.quit()
