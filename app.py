@@ -25,7 +25,7 @@ def scraper():
     #db.mars_collection.remove({})
     mars_data = mongo.db.mars_data
     mars = scrape_mars.scrape()
-    mars_data.update({}, mars, upsert=True)
+    mars_data.update_one({},{"$set":mars}, upsert=True)
     return redirect("/", code=302)
 
 if __name__ == "__main__":

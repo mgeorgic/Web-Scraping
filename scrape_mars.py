@@ -37,6 +37,7 @@ def scrape():
     #JPL Mars Space Images
     mars_image_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/index.html'
     browser.visit(mars_image_url)
+    browser.find_by_text(' FULL IMAGE').click()
     
     # JPL Mars Space Images - Featured Image
     #HTML object
@@ -44,14 +45,16 @@ def scrape():
 
     #Parse HTML with Beautiful Soup
     image_soup = bs(image_html, 'html.parser')
-
+   
     #find first Mars image url
     #img_path = image_soup.find('img', class_='fancybox-image')['src']
 
     #combine url to get image path 
-    featured_image_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/image/featured/mars2.jpg'
+    featured_image_url = image_soup.find('img', class_='fancybox-image')['src']
+
     mars_data['featured_img_url'] = featured_image_url
     print(f'featured image url = {featured_image_url}')
+
 
     # Visit Mars facts page and use Pandas to scrape the table
     facts_url = 'https://space-facts.com/mars/'
@@ -107,16 +110,17 @@ def scrape():
     hemi_url = 'https://astrogeology.usgs.gov'
 
     #loop through items 
-    for iv in items:
+    for i, iv in enumerate(items):
         #store title
         title = iv.find('h3').text
     
         # store the link to full image from thumbnail page
-        featured_image_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/image/featured/mars2.jpg'
+        hemi_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
 
         # link for the full image website
-        browser.visit(featured_image_url)
-    
+        browser.visit(hemi_url)
+        titles=browser.find_by_tag('h3')[i].click()
+        
         # HTML object for individual hemisphere sites
         image_url = browser.html    
     
@@ -124,7 +128,7 @@ def scrape():
         image_soup = bs(image_url, 'html.parser')
     
         # Full image path
-        hemisphere_img_path = image_soup.find('img', class_='wide-image')['src']
+        hemisphere_img_path = image_soup.find('img', class_='thumb')['src']
     
         # retrieve full image source
         img_url = f'https://astrogeology.usgs.gov{hemisphere_img_path}'
@@ -137,4 +141,3 @@ def scrape():
 
     return mars_data
 print(scrape())
-print(hemisphere_img_path)
