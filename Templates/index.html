@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-     <!-- Gives an ison on the website tab -->
-    <link rel="icon" type="image" href="https://pngimg.com/uploads/mars_planet/mars_planet_PNG13.png">
+     <!-- Gives an icon on the website tab -->
+    <link rel="icon" type="image" href="https://www.outerspaceuniverse.org/wp-content/uploads/planet-mars1.jpg">
     <title>Mars Data Scraping</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     
@@ -19,55 +19,57 @@
 <body class="text-black" style="background-color:rgb(73, 1, 1);">
     <div class="container">
         <!-- jumbotron -->
-        <div class="jumbotron text-center" style="background-image: url(https://cdn.theatlantic.com/static/mt/assets/science/0831Pic.jpg); background-size: 100%; height: 100%;">
-            <h1 class="display-4">Mars Data Scraping</h1>
-            <a class="btn btn-lg text-white" style="background-color:#a00505;" href="/scrape" role="button">Scrape New
+        <div class="jumbotron text-center"; style="background-color:lemonchiffon">
+            <h1 class="display-4"; style="font-family:fantasy; color: rgb(73, 1, 1)">Mars Data Scraping</h1>
+            <a class="btn btn-lg text-white" style="background-color:rgb(73, 1, 1);" href="/scrape" role="button">Scrape New
                 Data</a>
         </div>
 
       <!-- News Section   -->
-        <h1 style="color:white; text-align:center; margin-bottom:30px; border-bottom:1px solid white; padding-bottom:10px;">
+        <h1 style="color:lemonchiffon; text-align:center; margin-bottom:30px; border-bottom:1px solid white; padding-bottom:10px;">
             Mars Information
         </h1>
 
 
         <div class="container">
-                <h3>Latest Mars News</h3>
-                <h6 style="color: #c1440e">{{ mars_facts.news_t }}</h6>
-                <p>{{ mars_facts.news_p }}</p>
+                <h3 style= "color:lemonchiffon">
+                Latest Mars News</h3>
+                
+                <h6 style="color: #c1440e">{{ mars_data.news_t }}</h6>
+                <p style="color: rgb(255, 113, 57">{{ mars_data.news_p }}</p>
             </div>
 
-
+        <!-- Featured Image Section   -->
             <div class="container">
                     <div class="row">
                         <!-- Left Image-->
                         <div class="col-lg-8 col-md-8 col-sm-12">
-                            <h3>Featured Mars Image</h3>
-                            <img src="{{ mars_data.featured_image_url }}" style="max-width:100%; max-height: auto;" alt="Mars Featured Image">
+                            <h4 style= "color:lemonchiffon"> Featured Mars Image</h4>
+                            <img src="{{ mars_data.featured_img_url }}" style="max-width:100%; max-height: auto;" alt="Mars Featured Image">
                         </div>   
 
             <!-- Mars Facts Table -->
             <br>
-                    <h3>Mars Facts</h3>
-                    <div style="max-width: 450px; max-height: 150px; font-size: 15px; margin-bottom: 65px;">
-                        {{ mars_data.mars_facts|safe}}
+                    <div style="color:rgb(221, 144, 0); max-width: 450px; max-height: 150px; font-size: 15px; margin-bottom: 65px;">
+                        <h4 style= "color:lemonchiffon"> Mars Facts</h4>
+                        <table>{{ mars_data.mars_facts|safe }}</table>
                     </div>
                 </div> <!-- col4 -->
             </div><!-- Row -->
         </div><!-- Container -->
 
         <!-- Cards -->
-        <h3 style="padding-top: 50px; margin-top: 100px; text-align: center;">Mars Hemispheres</h3>
+        <h3 style="padding-top: 50px; margin-top: 100px; text-align: center; color:lemonchiffon">Mars Hemispheres</h3>
         <div class="card-deck">
             <hr>
             <div class="col-md-12">
-                <div class="row">
+                <div class="row" id="hemisphere_images">
                     {% for item in mars_data.hemisphere_images %}
                     <div class="col-md-6">
                         <div class="card text-white bg-dark" style="margin: 30px;">
-                            <img class="card-img-top" src="{{ item.full_image_url }}" />
+                            <img class="card-img-top" src="{{ item.img_url }}" alt="..."/ />
                             <div class="card-body">
-                                <p class="card-text">{{ item.title }}</p>
+                                <p class="card-text">{{item.Title[i] }}</p>
                             </div>
                         </div>
                     </div>

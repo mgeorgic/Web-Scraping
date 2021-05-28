@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 # Set the executable path and initialize the chrome browser in splinter
 def init_browser():
-    executable_path = {'executable_path': ChromeDriverManager().install()}
+    executable_path = {'executable_path': 'C:/Users/Doug/Desktop/chromedriver.exe'}
     return Browser('chrome', **executable_path, headless=False)
     #browser
 
@@ -52,7 +52,7 @@ def scrape():
     #combine url to get image path 
     featured_image_url = image_soup.find('img', class_='fancybox-image')['src']
 
-    mars_data['featured_img_url'] = featured_image_url
+    mars_data['featured_image_url'] = featured_image_url
     print(f'featured image url = {featured_image_url}')
 
 
