@@ -119,7 +119,7 @@ def scrape():
 
         # link for the full image website
         browser.visit(hemi_url)
-        titles=browser.find_by_tag('h3')[i].click()
+        titles = browser.find_by_tag('h3')[i].click()
         
         # HTML object for individual hemisphere sites
         image_url = browser.html    
@@ -134,7 +134,7 @@ def scrape():
         img_url = f'https://astrogeology.usgs.gov{hemisphere_img_path}'
     
         # append title and urls to list
-        hemi_image_urls.append({"Title": title,"Image Url": img_url})
+        hemi_image_urls.append({"Title": title,"Image_url": img_url})
         mars_data['hemisphere_images'] = hemi_image_urls
 
     browser.quit()
