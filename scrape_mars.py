@@ -52,8 +52,8 @@ def scrape():
     #combine url to get image path 
     featured_image_url = image_soup.find('img', class_='fancybox-image')['src']
 
-    mars_data['featured_image_url'] = featured_image_url
-    print(f'featured image url = {featured_image_url}')
+    mars_data['featured_img_url'] = f'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/{featured_image_url}'
+    #print(f'featured image url = {featured_image_url}')
 
 
     # Visit Mars facts page and use Pandas to scrape the table
@@ -119,7 +119,7 @@ def scrape():
 
         # link for the full image website
         browser.visit(hemi_url)
-        titles = browser.find_by_tag('h3')[i].click()
+        browser.find_by_tag('h3')[i].click()
         
         # HTML object for individual hemisphere sites
         image_url = browser.html    
@@ -128,16 +128,16 @@ def scrape():
         image_soup = bs(image_url, 'html.parser')
     
         # Full image path
-        hemisphere_img_path = image_soup.find('img', class_='thumb')['src']
-    
+        hemi_full_path = image_soup.find('img',class_='wide-image')['src']
+
         # retrieve full image source
-        img_url = f'https://astrogeology.usgs.gov{hemisphere_img_path}'
+        img_url = f'https://astrogeology.usgs.gov{hemi_full_path}'
     
         # append title and urls to list
-        hemi_image_urls.append({"Title": title,"Image_url": img_url})
+        hemi_image_urls.append({"title": title,"image_url": img_url})
         mars_data['hemisphere_images'] = hemi_image_urls
 
     browser.quit()
 
     return mars_data
-print(scrape())
+# print(scrape())
